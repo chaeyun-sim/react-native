@@ -27,6 +27,7 @@ const icons = {
 
 export default function App() {
   const [city, setCity] = useState("Loading...");
+  const [country, setCountry] = useState("");
   const [days, setDays] = useState([]);
   const [location, setLocation] = useState(null);
   const [ok, setOk] = useState(true);
@@ -58,6 +59,12 @@ export default function App() {
         }
       })
     );
+
+    const res = await fetch(
+      `https://restcountries.com/v3.1/alpha/${json.city.country}`
+    );
+    const result = await res.json();
+    setCountry(result[0].name.common);
   };
 
   const icons = {
@@ -76,8 +83,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.time}>
+        Today {new Date()
+          .toISOString().substring(0, 10)
+          .replaceAll("-", ".")
+          }
+      </Text>
       <View style={styles.city}>
         <Text style={styles.cityName}>{city}</Text>
+        <Text style={styles.country}>{country}</Text>
       </View>
       <ScrollView
         showsHorizontalScrollIndicator="false"
@@ -95,7 +109,7 @@ export default function App() {
           </View>
         ) : (
           days.map((day, index) => (
-            <>
+            <View>
               <View
                 style={styles.day}
                 key={index}
@@ -105,14 +119,7 @@ export default function App() {
                     width: "100%",
                     marginBottom: 50
                   }}
-                >
-                  <Text style={styles.time}>
-                    {new Date(day.dt * 1000)
-                      .toISOString()
-                      .substring(0, 10)
-                      .replaceAll("-", " ")}
-                  </Text>
-                </View>
+                ></View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -134,7 +141,7 @@ export default function App() {
                   {day.weather[0].description}
                 </Text>
               </View>
-            </>
+            </View>
           ))
         )}
       </ScrollView>
@@ -146,10 +153,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "tomato",
-    paddingTop: 40
+    paddingTop: 80
   },
   city: {
-    flex: 1.2,
+    flex: 0.,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -158,20 +165,23 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     color: "white"
   },
+  country: {
+    color: "white",
+    fontSize: 23,
+    marginTop: 5,
+    marginBottom: 10,
+  },
   time: {
     fontSize: 20,
     color: "white",
     width: "100%",
     textAlign: "center",
-    position: "absolute",
-    paddingTop: 10,
+    marginBottom: 80
   },
-  weather: {},
   day: {
     width: SCREEN_WIDTH,
     flex: 1,
     paddingLeft: 10,
-    paddingTop: 20
   },
   temp: {
     fontSize: 90,
