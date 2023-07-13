@@ -148,7 +148,7 @@ export default function App() {
         returnKeyType="done"
       ></TextInput>
       <ScrollView>
-        {Object.keys(todo).length > 2 && (<View style={styles.deleteAll}>
+        {todo && Object.keys(todo).length > 0 && (<View style={styles.deleteAll}>
           <View style={styles.allButton}>
             <TouchableOpacity onPress={deleteAllTodo}>
               <Text>Delete All</Text>
