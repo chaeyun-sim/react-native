@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.bg,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    paddingTop: 30
   },
   header: {
     justifyContent: "space-between",

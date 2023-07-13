@@ -32,6 +32,8 @@ export default function App() {
   const [location, setLocation] = useState(null);
   const [ok, setOk] = useState(true);
 
+  const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   const getWeather = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
     if (!granted) {
@@ -83,12 +85,6 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.time}>
-        Today {new Date()
-          .toISOString().substring(0, 10)
-          .replaceAll("-", ".")
-          }
-      </Text>
       <View style={styles.city}>
         <Text style={styles.cityName}>{city}</Text>
         <Text style={styles.country}>{country}</Text>
@@ -110,6 +106,10 @@ export default function App() {
         ) : (
           days.map((day, index) => (
             <View>
+              <Text style={styles.time}>
+                {day.dt_txt.split(' ')[0]}{' '}
+                {week[new Date(day.dt_txt).getDay()]}
+              </Text>
               <View
                 style={styles.day}
                 key={index}
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     paddingTop: 80
   },
   city: {
-    flex: 0.,
+    flex: 0,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -167,12 +167,12 @@ const styles = StyleSheet.create({
   },
   country: {
     color: "white",
-    fontSize: 23,
+    fontSize: 33,
     marginTop: 5,
-    marginBottom: 10,
+    marginBottom: 10
   },
   time: {
-    fontSize: 20,
+    fontSize: 17,
     color: "white",
     width: "100%",
     textAlign: "center",
@@ -181,11 +181,10 @@ const styles = StyleSheet.create({
   day: {
     width: SCREEN_WIDTH,
     flex: 1,
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   temp: {
     fontSize: 90,
-    marginTop: 50,
     fontWeight: 600,
     marginBottom: 20,
     color: "white"
