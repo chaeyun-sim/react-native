@@ -13,11 +13,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: "20%"
   },
-  btnText: {
-    fontSize: 38,
-    fontWeight: 600,
-    color: "white"
-  },
   input: {
     backgroundColor: "white",
     paddingVertical: 15,

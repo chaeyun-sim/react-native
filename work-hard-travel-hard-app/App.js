@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./styles";
 
 const STORAGE_KEY = "@todo";
-const CURRENTTITLE_KEY = '@currenttitle'
+const CURRENTTITLE_KEY = "@currenttitle";
 
 export default function App() {
   const [working, setWorking] = useState(true);
@@ -58,7 +58,13 @@ export default function App() {
     if (!text) return;
     const newTodo = {
       ...todo,
-      [Date.now()]: { text, working, done, isEditing: false, date: new Date().toISOString().split('T')[[0]] }
+      [Date.now()]: {
+        text,
+        working,
+        done,
+        isEditing: false,
+        date: new Date().toISOString().split("T")[[0]]
+      }
     };
     setTodo(newTodo);
     await saveTodo(newTodo);
@@ -109,21 +115,28 @@ export default function App() {
   };
 
   const deleteAllTodo = async () => {
-    const newTodo = { ... todo}
-    const test = Object.keys(newTodo).filter(el => newTodo[el].working === working)
+    const newTodo = { ...todo };
+    const test = Object.keys(newTodo).filter(
+      (el) => newTodo[el].working === working
+    );
     for (t of test) {
-      delete newTodo[t]
+      delete newTodo[t];
     }
     setTodo(newTodo);
-    await saveTodo(newTodo)
-  }
+    await saveTodo(newTodo);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={work}>
           <Text
-            style={{ ...styles.btnText, color: working ? "white" : theme.grey }}
+            style={{
+              fontSize: 38,
+              fontWeight: 600,
+              color: "white",
+              color: working ? "white" : theme.grey
+            }}
           >
             Work
           </Text>
@@ -148,13 +161,15 @@ export default function App() {
         returnKeyType="done"
       ></TextInput>
       <ScrollView>
-        {todo && Object.keys(todo).length > 0 && (<View style={styles.deleteAll}>
-          <View style={styles.allButton}>
-            <TouchableOpacity onPress={deleteAllTodo}>
-              <Text>Delete All</Text>
-            </TouchableOpacity>
+        {todo && Object.keys(todo).length > 0 && (
+          <View style={styles.deleteAll}>
+            <View style={styles.allButton}>
+              <TouchableOpacity onPress={deleteAllTodo}>
+                <Text>Delete All</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>)}
+        )}
         {todo &&
           Object.keys(todo)
             .reverse()
@@ -226,4 +241,3 @@ export default function App() {
     </View>
   );
 }
-
