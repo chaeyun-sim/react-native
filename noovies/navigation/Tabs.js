@@ -3,13 +3,12 @@ import Movies from "../screen/Movies";
 import Tv from "../screen/Tv";
 import Search from "../screen/Search";
 import { BLACK_COLOR, DARK_GREY, LIGHT_GREY, YELLOW_COLOR } from "../colors";
-import { useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const isDark = useColorScheme() === "dark";
+  const isDark = true
   return (
     <Tab.Navigator
       screenOptions={{
@@ -27,15 +26,15 @@ const Tabs = () => {
         tabBarLabelStyle: {
           fontSize: 10,
           fontWeight: "600"
-        }
+        },
       }}
     >
       <Tab.Screen
         name="Movies"
         component={Movies}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
-            console.log(focused, color, size);
             return (
               <Ionicons
                 name="film-outline"

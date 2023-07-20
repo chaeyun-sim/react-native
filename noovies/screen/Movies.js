@@ -1,11 +1,14 @@
 import react from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
-const Movies = () => {
+const Movies = ({ navigation: { navigate } }) => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <TouchableOpacity
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      onPress={() => navigate("Stack", { screen: "Three" })}
+    >
       <Text>Movies</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
